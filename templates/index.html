@@ -8,7 +8,7 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
 <style>
 body { margin: 0; padding: 0; }
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+#map { position: absolute; top: 0; bottom: 0; width: 80%; }
 </style>
 </head>
 <body>
@@ -34,6 +34,12 @@ body { margin: 0; padding: 0; }
     .overlay button:hover {
         background-color: #4ea0da;
     }
+
+    #buttons {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 </style>
 <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
 
@@ -57,10 +63,12 @@ body { margin: 0; padding: 0; }
     });
 
     // San Francisco
-    const origin = [-122.414, 37.776];
+    const origin = [{{ flight_origin }}];
+    console.log("origin: " + origin);
 
-    // Washington DC
-    const destination = [-77.032, 38.913];
+    // Helsinki
+    const destination = [{{ flight_destination }}];
+    console.log("destination: " + destination);
 
     // A simple line from origin to destination.
     const route = {
@@ -206,8 +214,17 @@ body { margin: 0; padding: 0; }
 
         // Start the animation
         animate(counter);
+
+        function buttonAction(event){
+            const buttonForm = document.getElementById("buttons");
+            event.preventDefault();
+        }
+
+        buttonForm.addEventListener("click", buttonAction);
     });
 </script>
-
+<form method="post" id="buttons" action="/">
+    <input type="submit" value="San Francisco" name="San Francisco"/>
+</form>
 </body>
 </html>
