@@ -6,6 +6,7 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 80%; }
@@ -214,17 +215,37 @@ body { margin: 0; padding: 0; }
 
         // Start the animation
         animate(counter);
+    });
 
-        function buttonAction(event){
-            const buttonForm = document.getElementById("buttons");
-            event.preventDefault();
-        }
+    map.on('draw.update', sourceRefresh);
 
-        buttonForm.addEventListener("click", buttonAction);
+    function sourceRefresh(e) {
+        let data = draw.getAll();
+        map.getSource('point').setData(point);
+    };
+
+</script>
+<script type="text/javascript">
+    $(document).on('click','.btn',function(e)
+    {
+        e.preventDefault();
+        let country;
+        country = e.target.value;
+        console.log(`country ${country}`);
+        $.ajax({
+            type:'POST',
+            url:'/',
+            data: {'data': country},
+            success:function()
+            {
+                console.log(`Country 1 : ${document.getElementById('country1').value} Country 2 : ${document.getElementById('country2').value}`);
+            }
+        })
     });
 </script>
 <form method="post" id="buttons" action="/">
-    <input type="submit" value="San Francisco" name="San Francisco"/>
+    <input type="submit" class="btn" id="country1" value="New York" name="New York"/>
+    <input type="submit" class="btn" id="country2" value="San Francisco" name="San Francisco"/>
 </form>
 </body>
 </html>
