@@ -12,7 +12,7 @@ def index():
             print(f"Triggered")
             config.flight_origin = config.flight_destination
             print(f"Origin: {config.flight_origin}")
-            config.flight_destination = "-77.032, 38.913"
+            config.flight_destination = config.new_york
             print(f"Destination: {config.flight_destination}")
         if country == "San Francisco":
             print(f"Triggered")

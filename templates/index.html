@@ -124,7 +124,7 @@ body { margin: 0; padding: 0; }
     let counter = 0;
 
     map.on('load', () => {
-        // Add a source and layer displaying a point which will be animated in a circle.
+        // Add a source and layer displaying a point which will be animated in a circle.      
         map.addSource('route', {
             'type': 'geojson',
             'data': route
@@ -216,14 +216,6 @@ body { margin: 0; padding: 0; }
         // Start the animation
         animate(counter);
     });
-
-    map.on('draw.update', sourceRefresh);
-
-    function sourceRefresh(e) {
-        let data = draw.getAll();
-        map.getSource('point').setData(point);
-    };
-
 </script>
 <script type="text/javascript">
     $(document).on('click','.btn',function(e)
@@ -238,7 +230,8 @@ body { margin: 0; padding: 0; }
             data: {'data': country},
             success:function()
             {
-                console.log(`Country 1 : ${document.getElementById('country1').value} Country 2 : ${document.getElementById('country2').value}`);
+                //console.log(`Country 1 : ${document.getElementById('country1').value} Country 2 : ${document.getElementById('country2').value}`);
+                location.reload(true);
             }
         })
     });
