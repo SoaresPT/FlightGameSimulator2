@@ -64,11 +64,11 @@ body { margin: 0; padding: 0; }
     });
 
     // San Francisco
-    const origin = [{{ flight_origin }}];
+    let origin = [{{ flight_origin }}];
     console.log("origin: " + origin);
 
     // Helsinki
-    const destination = [{{ flight_destination }}];
+    let destination = [{{ flight_destination }}];
     console.log("destination: " + destination);
 
     // A simple line from origin to destination.
@@ -126,6 +126,9 @@ body { margin: 0; padding: 0; }
     map.on('load', () => {
         // Add controls to the right side
         map.addControl(new mapboxgl.NavigationControl());
+        
+        // Remove this later
+        map.flyTo({center: [destination[0], destination[1]], zoom: 4, speed: 0.2});
         
         // Add a source and layer displaying a point which will be animated in a circle.      
         map.addSource('route', {
@@ -219,8 +222,8 @@ body { margin: 0; padding: 0; }
         // Start the animation
         animate(counter);
     });
-</script>
-<script type="text/javascript">
+
+    // Ajax code to detect what button got clicked on and send it to flask to update the vars
     $(document).on('click','.btn',function(e)
     {
         e.preventDefault();
@@ -233,7 +236,10 @@ body { margin: 0; padding: 0; }
             data: {'data': country},
             success:function()
             {
-                //console.log(`Country 1 : ${document.getElementById('country1').value} Country 2 : ${document.getElementById('country2').value}`);
+                /*origin = [destination[0], destination[1]];
+                console.log(origin)
+                destination = [{{ flight_destination }}];*/
+                map.flyTo({center: [destination[0], destination[1]], zoom: 4, speed: 0.2});
                 location.reload(true);
             }
         })
