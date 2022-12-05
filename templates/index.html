@@ -124,6 +124,9 @@ body { margin: 0; padding: 0; }
     let counter = 0;
 
     map.on('load', () => {
+        // Add controls to the right side
+        map.addControl(new mapboxgl.NavigationControl());
+        
         // Add a source and layer displaying a point which will be animated in a circle.      
         map.addSource('route', {
             'type': 'geojson',
